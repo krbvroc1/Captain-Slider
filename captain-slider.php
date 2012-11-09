@@ -37,8 +37,16 @@ if ( ! defined( 'CTSLIDER_PLUGIN_URL' ) ) {
 /* ADMIN
 /*---------------------*/
 
-// Slider Sorter
-include_once( CTSLIDER_PLUGIN_DIR . 'includes/admin/sorter.php' );
+// We only want to load these for admins, so let's do a conditional for just that:
+if ( is_admin() ) {
+
+	// Slider Sorter
+	include_once( CTSLIDER_PLUGIN_DIR . 'includes/admin/sorter.php' );
+	
+	// Slider's User Interface
+	include_once( CTSLIDER_PLUGIN_DIR . 'includes/admin/ui.php' );
+
+}
 
 // Register Some Settings
 include_once( CTSLIDER_PLUGIN_DIR . 'includes/admin/settings.php' );
@@ -51,11 +59,8 @@ include_once( CTSLIDER_PLUGIN_DIR . 'includes/admin/taxonomy.php' );
 
 // Slider's Metabox
 include_once( CTSLIDER_PLUGIN_DIR . 'includes/admin/meta-box.php' );
-
-// Slider's User Interface
-include_once( CTSLIDER_PLUGIN_DIR . 'includes/admin/ui.php' );
-
-
+	
+	
 /*---------------------*/
 /* FRONT END
 /*---------------------*/
@@ -86,37 +91,56 @@ load_plugin_textdomain( 'ctslider', false, dirname( plugin_basename( __FILE__ ) 
 |--------------------------------------------------------------------------
 */
 
+// Register Scripts
+function ctslider_register_scripts() {
+
+	wp_register_style( 'flex-style',  CTSLIDER_PLUGIN_URL . 'css/flexslider.css' );
+	wp_register_style( 'admin-styles', CTSLIDER_PLUGIN_URL . 'css/admin-styles.css' );
+	
+	wp_register_script( 'flex-script',  CTSLIDER_PLUGIN_URL .  'js/jquery.flexslider-min.js', false, true, true );
+		
+	wp_register_script( 'fitvid',  CTSLIDER_PLUGIN_URL . 'js/jquery.fitvids.js', false, true, true );
+	
+}
+add_action( 'init', 'ctslider_register_scripts' );
+
+
+// Enqueue Scripts
 function ctslider_load_scripts() {
 
 	wp_enqueue_script( 'jquery' );
-	
-	wp_enqueue_style( 'flex-style',  CTSLIDER_PLUGIN_URL . 'css/flexslider.css' );
-	
-	wp_enqueue_script( 'flex-script',  CTSLIDER_PLUGIN_URL .  'js/jquery.flexslider-min.js', array( 'jquery' ), false, true );
+	wp_enqueue_script( 'flex-script', array( 'jquery' ) );
+	wp_enqueue_script( 'fitvid', array( 'jquery' ) );
 		
-	wp_enqueue_script( 'fitvid',  CTSLIDER_PLUGIN_URL . 'js/jquery.fitvids.js', array( 'jquery' ), false, true );
+	wp_enqueue_style( 'flex-style' );
 	
 }
-add_action('wp_enqueue_scripts', 'ctslider_load_scripts');
+add_action( 'wp_enqueue_scripts', 'ctslider_load_scripts' );
 
 
 // Admin Scripts/Styles   
 function ctslider_load_admin_scripts($hook) {
+
 	global $post;
-    if( 'edit.php' == $hook && 'slides' == $post->post_type ) {
-    	wp_enqueue_style( 'admin-styles', CTSLIDER_PLUGIN_URL . 'css/admin-styles.css' );
+    if( 'edit.php' === $hook && 'slides' === $post->post_type ) {
+    	wp_enqueue_style( 'admin-styles' );
     }
+    
 }
 add_action( 'admin_enqueue_scripts', 'ctslider_load_admin_scripts' );
 
 
 function ctslider_slider_load() {
+
 	$effect = ctslider_options_each('effect');
 	$automatic = ctslider_options_each( 'automatic' );
 	$controlnav = ctslider_options_each( 'bullets' );
 	$arrownav = ctslider_options_each( 'arrows' );
 	$slidespeed = ctslider_options_each( 'slidelength' );
-	$anispeed = ctslider_options_each( 'animationlength' ); ?>
+	$anispeed = ctslider_options_each( 'animationlength' );
+	
+		ob_start();
+	?>
 
 		<script type="text/javascript">
 		/* Slider Parameters */
@@ -142,6 +166,8 @@ function ctslider_slider_load() {
 		</script>
 		
 	<?php
+		echo ob_get_clean();
+	
 }
 add_action( 'wp_head', 'ctslider_slider_load' );
 
@@ -162,7 +188,7 @@ function ctslider_settings_link($links, $file) {
 	if (!$this_plugin) $this_plugin = plugin_basename(__FILE__);
  
 	if ($file == $this_plugin){
-		$settings_link = '<a href="edit.php?post_type=slides&page=ctslider_all_options">'.__("Settings", "eddslider").'</a>';
+		$settings_link = '<a href="' . admin_url( 'edit.php?post_type=slides&page=ctslider_all_options' ) . '">' . __("Settings", "eddslider") . '</a>';
 		array_unshift($links, $settings_link);
 	}
 	

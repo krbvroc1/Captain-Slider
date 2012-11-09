@@ -40,28 +40,30 @@ function ctslider_options_each( $key ) {
 function ctslider_example_theme_menu() {
 
 	add_submenu_page(
-		'edit.php?post_type=slides',				// The ID of the top-level menu page to which this submenu item belongs
-		'Captain Slider Settings',					// The value used to populate the browser's title bar when the menu page is active
-		'Settings',					// The label of this submenu item displayed in the menu
-		'administrator',					// What roles are able to access this submenu item
-		'ctslider_all_options',	// The ID used to represent this submenu item
-		'ctslider_theme_display'				// The callback function used to render the options for this submenu item
+		'edit.php?post_type=slides',
+		'Captain Slider Settings',
+		'Settings',
+		'manage_options',
+		'ctslider_all_options',
+		'ctslider_theme_display'
 	);
 
-
-} // end ctslider_example_theme_menu
+}
 add_action( 'admin_menu', 'ctslider_example_theme_menu' );
 
 /**
  * Renders a simple page to display for the theme menu defined above.
  */
 function ctslider_theme_display( $active_tab = '' ) {
-?>
+	
+	ob_start();
+	?>
+
 	<!-- Create a header in the default WordPress 'wrap' container -->
 	<div class="wrap">
 	
 		<div id="icon-themes" class="icon32"></div>
-		<h2>Captain Slider Settings</h2>
+		<h2><?php _e('Captain Slider Settings', 'ctslider' ); ?></h2>
 		<?php settings_errors(); ?>
 		
 		<?php if( isset( $_GET[ 'tab' ] ) ) {
@@ -86,7 +88,7 @@ function ctslider_theme_display( $active_tab = '' ) {
 		}
 		?>
 		
-		<h3>Documentation</h3>
+		<h3><?php _e( 'Documentation', 'ctslider' ); ?></h3>
 		<p><?php printf( __( 'I love writing documentation, so I wrote a lot of it for you: %sVisit Captain Slider Documentation%s.', 'ctslider' ), '<strong><a href="http://cpthe.me/sliderdocs">', '</a></strong>' ); ?></p>
 		
 		<form method="post" action="options.php">
@@ -100,6 +102,9 @@ function ctslider_theme_display( $active_tab = '' ) {
 				} // end if/else
 
 				submit_button();
+	
+	echo ob_get_clean();
+	
 	
 } // end ctslider_theme_display
 
@@ -318,7 +323,7 @@ function ctslider_note_callback() {
 	
 	_e( 'If you change the width/height above, you will need to regenerate the slider images.', 'ctslider' );
 	echo '<br/>';
-	_e( 'Either <strong>Install the <a href="http://cpthe.me/regenerate/">Regenate Thumbnails</a> Plugin</strong> or reupload your slides.', 'ctslider' );
+	printf( __( 'Either %sInstall the %sRegenate Thumbnails%s Plugin%s or reupload your slides.', 'ctslider' ), '<strong>', '<a href="http://cpthe.me/regenerate/">', '</a>', '</strong>' );
 	
 } // end ctslider_note_callback
 
