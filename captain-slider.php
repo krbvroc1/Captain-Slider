@@ -27,6 +27,10 @@ if ( ! defined( 'CTSLIDER_PLUGIN_URL' ) ) {
 	define( 'CTSLIDER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
+// Plugin Version
+define( 'CTSLIDER_VERSION', '1.0.0' );
+
+
 /*
 |--------------------------------------------------------------------------
 | INCLUDES
@@ -94,18 +98,18 @@ load_plugin_textdomain( 'ctslider', false, dirname( plugin_basename( __FILE__ ) 
 // Register Scripts
 function ctslider_register_scripts() {
 
-	wp_register_style( 'flex-style',  CTSLIDER_PLUGIN_URL . 'css/flexslider.css' );
-	wp_register_style( 'admin-styles', CTSLIDER_PLUGIN_URL . 'css/admin-styles.css' );
+	wp_register_style( 'flex-style',  CTSLIDER_PLUGIN_URL . 'css/flexslider.css', false, CTSLIDER_VERSION );
+	wp_register_style( 'admin-styles', CTSLIDER_PLUGIN_URL . 'css/admin-styles.css', false, CTSLIDER_VERSION );
 	
-	wp_register_script( 'flex-script',  CTSLIDER_PLUGIN_URL .  'js/jquery.flexslider-min.js', false, true, true );
+	wp_register_script( 'flex-script',  CTSLIDER_PLUGIN_URL .  'js/jquery.flexslider-min.js', false, CTSLIDER_VERSION, true );
 		
-	wp_register_script( 'fitvid',  CTSLIDER_PLUGIN_URL . 'js/jquery.fitvids.js', false, true, true );
+	wp_register_script( 'fitvid',  CTSLIDER_PLUGIN_URL . 'js/jquery.fitvids.js', false, CTSLIDER_VERSION, true );
 	
 }
 add_action( 'init', 'ctslider_register_scripts' );
 
 
-// Enqueue Scripts
+// Enqueue Scripts/Styles
 function ctslider_load_scripts() {
 
 	wp_enqueue_script( 'jquery' );
@@ -118,7 +122,7 @@ function ctslider_load_scripts() {
 add_action( 'wp_enqueue_scripts', 'ctslider_load_scripts' );
 
 
-// Admin Scripts/Styles   
+// Enqueue Admin Scripts/Styles   
 function ctslider_load_admin_scripts($hook) {
 
 	global $post;
