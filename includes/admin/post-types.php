@@ -1,6 +1,24 @@
 <?php
+/**
+ * Post Type Functions
+ *
+ * @package     Captain Slider
+ * @subpackage  Post Type Functions
+ * @copyright   Copyright (c) 2012, Bryce Adams
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0.0
+*/
 
-// Register Slides Post Type
+
+/**
+ * Setup Slides Post Type
+ *
+ * Registers the Sliders custom post type.
+ *
+ * @access      private
+ * @since       1.0.0
+ * @return      void
+*/
 
 function ctslider_register_slides_posttype() {
 	$labels = array(
@@ -37,16 +55,22 @@ function ctslider_register_slides_posttype() {
 		'menu_position' 	=> 28,
 		'menu_icon' 		=> CTSLIDER_PLUGIN_URL . 'assets/images/icon.png',
 		'taxonomies'		=> $taxonomies
-	 );
+	);
+
 	 register_post_type( 'slides', $post_type_args );
 }
 add_action( 'init', 'ctslider_register_slides_posttype' );
 
 
-// Rename Slider Main Menu Title
+/**
+ * Rename Slider Admin Menu Title
+ *
+ * @access      private
+ * @since       1.0.0
+ * @return      void
+ */
 function ctslider_edit_admin_menus() {
-	global $menu;
-	global $submenu;
+	global $menu, $submenu;
 	$menu[28][0] = 'Captain Slider';
 }
 add_action( 'admin_menu', 'ctslider_edit_admin_menus' );
