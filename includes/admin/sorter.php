@@ -73,7 +73,7 @@ function ctslider_slides_order_page() {
 // jQuery UI
 function ctslider_admin_enqueue_scripts() {
 	wp_enqueue_script( 'jquery-ui-sortable' );
-	wp_enqueue_script( 'ctslider-admin-scripts', CTSLIDER_PLUGIN_URL . 'js/admin-scripts.js' );
+	wp_enqueue_script( 'ctslider-admin-scripts', CTSLIDER_PLUGIN_URL . 'includes/js/admin-scripts.js' );
 }
 add_action( 'admin_enqueue_scripts', 'ctslider_admin_enqueue_scripts' );
 
