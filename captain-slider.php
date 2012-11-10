@@ -67,7 +67,7 @@ function ctslider_load_admin_scripts( $hook ) {
 
 	wp_register_style( 'admin-styles', CTSLIDER_PLUGIN_URL . 'includes/css/admin-styles.css', false, CTSLIDER_VERSION );
 
-	if( 'edit.php' === $hook && 'slides' === $post->post_type ) {
+	if ( 'edit.php' === $hook && 'slides' === $post->post_type ) {
 		wp_enqueue_style( 'admin-styles' );
 	}
 }
@@ -104,9 +104,9 @@ function ctslider_slider_load() {
 				.flexslider({
 				animation: '<?php if ( $effect == 'fade' ) { echo 'fade'; } else { echo 'slide'; } ?>', // Specify sets like: 'fade' or 'slide'
 				direction: '<?php if ( $effect == 'slideh' ) { echo 'horizontal'; } else { echo 'vertical'; } ?>',
-				slideshow: <?php if ( $automatic == 1 ) { echo 'false'; } else { echo 'true'; } ?>,
-				controlNav: <?php if ( $controlnav == 1 ) { echo 'false'; } else { echo 'true'; } ?>,
-				directionNav: <?php if ( $arrownav == 1 ) { echo 'false'; } else { echo 'true'; } ?>,
+				slideshow: <?php if ( 1 === $automatic ) { echo 'false'; } else { echo 'true'; } ?>,
+				controlNav: <?php if ( 1 === $controlnav ) { echo 'false'; } else { echo 'true'; } ?>,
+				directionNav: <?php if ( 1 === $arrownav  ) { echo 'false'; } else { echo 'true'; } ?>,
 				slideshowSpeed: <?php echo $slidespeed; ?>,
 				animationSpeed: <?php echo $anispeed; ?>,
 				useCSS: false,
