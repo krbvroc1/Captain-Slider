@@ -1,6 +1,23 @@
 <?php
+/**
+ * Metabox Functions
+ *
+ * @package     Captain Slider
+ * @subpackage  Metabox Functions
+ * @copyright   Copyright (c) 2012, Bryce Adams
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0.0
+ */
 
-// Set Up Meta Box & Fields for Slides
+
+/**
+ * Setup Metabox
+ *
+ * Creates the array to setup the metabox as well all the metabox fields
+ *
+ * @since      1.0.0
+ */
+
 $ctslider_slidecaption_1_metabox = array( 
 	'id' => 'slidecaption',
 	'title' => __( 'Slider Settings', 'ctslider' ),
@@ -41,6 +58,14 @@ $ctslider_slidecaption_1_metabox = array(
 );					
 
 
+/**
+ * Register all metaboxes for sliders.
+ *
+ * @access      private
+ * @since       1.0.0
+ * @return      void
+ */
+
 function ctslider_add_slidecaption_1_meta_box() {
 	global $ctslider_slidecaption_1_metabox;		
 
@@ -51,7 +76,14 @@ function ctslider_add_slidecaption_1_meta_box() {
 add_action('admin_menu', 'ctslider_add_slidecaption_1_meta_box');
 
 	
-// Display Meta Boxes
+/**
+ * Display the meta boxes
+ *
+ * @access      private
+ * @since       1.0.0
+ * @return      void
+ */ 
+
 function ctslider_show_slidecaption_1_box()	{
 	global $post, $ctslider_slidecaption_1_metabox, $ctslider_prefix, $wp_version;
 	
@@ -96,27 +128,30 @@ function ctslider_show_slidecaption_1_box()	{
 	echo '</table>';
 }
 
-// Save data from meta box
+
+/**
+ * Save Meta Box Data
+ *
+ * @access      private
+ * @since       1.0.0.
+ * @return      void
+ */
+
 function ctslider_slidecaption_1_save( $post_id ) {
-	global $post;
-	global $ctslider_slidecaption_1_metabox;
+	global $post, $ctslider_slidecaption_1_metabox;
 	
-	// verify nonce
-	if ( !wp_verify_nonce( $_POST['ctslider_slidecaption_1_meta_box_nonce'], basename(__FILE__) ) ) {
+	if ( !wp_verify_nonce( $_POST['ctslider_slidecaption_1_meta_box_nonce'], basename(__FILE__) ) )
 		return $post_id;
-	}
 
-	// check autosave
-	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
 		return $post_id;
-	}
 
-	// check permissions
+	// Check Capabilities
 	if ( 'page' == $_POST['post_type'] ) {
 		if ( !current_user_can( 'edit_page', $post_id ) ) {
 			return $post_id;
 		}
-	} elseif (!current_user_can('edit_post', $post_id)) {
+	} elseif ( !current_user_can( 'edit_post', $post_id ) ) {
 		return $post_id;
 	}
 	
@@ -141,7 +176,14 @@ function ctslider_slidecaption_1_save( $post_id ) {
 add_action('save_post', 'ctslider_slidecaption_1_save');
 
 
-// Rename Post Thumbnail Meta Box
+/**
+ * Rename Post Thumbnail Meta Box
+ *
+ * @access      private
+ * @since       1.0.0
+ * @return      void
+ */
+
 function ctslider_change_image_box() {
 	remove_meta_box( 'postimagediv', 'slides', 'side' );
 	add_meta_box('postimagediv', __( 'Slide Image', 'ctslider' ), 'post_thumbnail_meta_box', 'slides', 'normal', 'high');
