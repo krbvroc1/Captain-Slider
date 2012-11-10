@@ -60,7 +60,7 @@ function ctslider_load_scripts() {
 add_action( 'wp_enqueue_scripts', 'ctslider_load_scripts' );
 
 
-function ctslider_load_admin_scripts($hook) {
+function ctslider_load_admin_scripts( $hook ) {
 	global $post;
 
 	if( 'edit.php' === $hook && 'slides' === $post->post_type ) {
