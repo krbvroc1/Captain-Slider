@@ -56,19 +56,19 @@ function ctslider_show_slidecaption_1_box()	{
 	global $post, $ctslider_slidecaption_1_metabox, $ctslider_prefix, $wp_version;
 	
 	// Use nonce for verification
-	echo '<input type="hidden" name="ctslider_slidecaption_1_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
+	echo '<input type="hidden" name="ctslider_slidecaption_1_meta_box_nonce" value="'. wp_create_nonce( basename( __FILE__ ) ) .'" />';
 	echo '<table class="form-table">';
 
 	foreach ( $ctslider_slidecaption_1_metabox['fields'] as $field ) {
-		$meta = get_post_meta($post->ID, $field['id'], true);
+		$meta = get_post_meta( $post->ID, $field['id'], true );
 		
 		echo '<tr>',
-				'<th style="width:20%"><label for="', $field['id'], '">', stripslashes($field['name']), '</label></th>',
-				'<td class="ctslider_field_type_' . str_replace(' ', '_', $field['type']) . '">';
+				'<th style="width:20%"><label for="', $field['id'], '">', stripslashes( $field['name'] ), '</label></th>',
+				'<td class="ctslider_field_type_' . str_replace( ' ', '_', $field['type'] ) . '">';
 
-		switch ($field['type']) {
+		switch( $field['type'] ) {
 			case 'text':
-				echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', $meta ? $meta : $field['std'], '" size="30" style="width:97%" /><br/>', '', stripslashes($field['desc']);
+				echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', $meta ? $meta : $field['std'], '" size="30" style="width:97%" /><br/>', '', __( stripslashes( $field['desc'] ), 'ctslider' );
 			break;
 
 			case 'textarea':
@@ -92,10 +92,10 @@ function ctslider_show_slidecaption_1_box()	{
 		echo     '<td>',
 			'</tr>';
 	}
-	
+
 	echo '</table>';
-}	
-	
+}
+
 // Save data from meta box
 function ctslider_slidecaption_1_save( $post_id ) {
 	global $post;
