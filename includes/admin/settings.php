@@ -1,77 +1,78 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| SETTINGS PAGE
-|--------------------------------------------------------------------------
+/**
+ * Register Settings
+ *
+ * @package     Captain Slider
+ * @subpackage  Register Settings
+ * @copyright   Copyright (c) 2012, Bryce Adams
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0.0
 */
+
 
 function ctslider_options_each( $key ) {
 
-    $slider_options = get_option( 'ctslider_all_options' );
+	$slider_options = get_option( 'ctslider_all_options' );
 
-     /* Define the array of defaults */ 
-    $defaults = array(
-        'width'     		=> 0,
-        'height'     		=> 0,
-        'effect'    		=> 'fade',
-        'bullets'			=> 0,
-        'arrows'			=> 0,
-        'slidelength'		=> 6000,
-        'animationlength'	=> 600,
-        'automatic'			=> 0,
-        'donation'			=> 0
-    );
-
-    $slider_options = wp_parse_args( $slider_options, $defaults );
-
-    if( isset( $slider_options[$key] ) )
-         return $slider_options[$key];
-
-    return false;
-}
-
-
-/**
- * This function introduces the theme options into the 'Appearance' menu and into a top-level 
- * 'Sandbox Theme' menu.
- */
-
-function ctslider_example_theme_menu() {
-
-	add_submenu_page(
-		'edit.php?post_type=slides',
-		'Captain Slider Settings',
-		'Settings',
-		'manage_options',
-		'ctslider_all_options',
-		'ctslider_theme_display'
+	 /* Define the array of defaults */ 
+	$defaults = array(
+		'width'     		=> 0,
+		'height'     		=> 0,
+		'effect'    		=> 'fade',
+		'bullets'			=> 0,
+		'arrows'			=> 0,
+		'slidelength'		=> 6000,
+		'animationlength'	=> 600,
+		'automatic'			=> 0,
+		'donation'			=> 0
 	);
 
+	$slider_options = wp_parse_args( $slider_options, $defaults );
+
+	if( isset( $slider_options[$key] ) )
+		 return $slider_options[$key];
+
+	return false;
 }
-add_action( 'admin_menu', 'ctslider_example_theme_menu' );
+
+
+function ctslider_admin_menu() {
+	add_submenu_page(
+		'edit.php?post_type=slides',
+		__( 'Captain Slider Settings', 'ctslider' ),
+		__( 'Settings', 'ctslider' ),
+		'manage_options',
+		'ctslider_all_options',
+		'ctslider_render_settings_page'
+	);
+}
+add_action( 'admin_menu', 'ctslider_admin_menu' );
 
 
 /**
- * Renders a simple page to display for the theme menu defined above.
+ * Render Settings Page
+ *
+ * @access      private
+ * @since       1.0.0
+ * @return      void
  */
 
-function ctslider_theme_display( $active_tab = '' ) {
+function ctslider_render_settings_page( $active_tab = '' ) {
 	ob_start(); ?>
 
 	<div class="wrap">
 	
 		<div id="icon-themes" class="icon32"></div>
-		<h2><?php _e('Captain Slider Settings', 'ctslider' ); ?></h2>
+		<h2><?php _e( 'Captain Slider Settings', 'ctslider' ); ?></h2>
 		<?php settings_errors(); ?>
 		
-		<?php if( isset( $_GET[ 'tab' ] ) ) {
+		<?php if ( isset( $_GET[ 'tab' ] ) ) {
 			$active_tab = $_GET[ 'tab' ];
 		} else {
 			$active_tab = 'display_options';
 		}
 
-		$donate = ctslider_options_each('donation');
+		$donate = ctslider_options_each( 'donation' );
 
 		if ( $donate !== 1 ) {
 			echo '<p>';
@@ -95,36 +96,21 @@ function ctslider_theme_display( $active_tab = '' ) {
 			if ( $active_tab == 'display_options' ) {
 				settings_fields( 'ctslider_all_options' );
 				do_settings_sections( 'ctslider_all_options' );
-
 			}
 
 			submit_button();
 	
-	echo ob_get_clean();
-	
-	
-} // end ctslider_theme_display
+	echo ob_get_clean();	
+}
 
-
-/* ------------------------------------------------------------------------ *
- * Setting Registration
- * ------------------------------------------------------------------------ */ 
-
-
-/**
- * Initializes the theme's display options page by registering the Sections,
- * Fields, and Settings.
- *
- * This function is registered with the 'admin_init' hook.
- */ 
 
 function ctslider_initialize_theme_options() {
 
 	// If the theme options don't exist, create them.
-	if( false == get_option( 'ctslider_all_options' ) )
+	if ( false == get_option( 'ctslider_all_options' ) )
 		add_option( 'ctslider_all_options' );
 
-	// First, we register a section. This is necessary since all future options must belong to a 
+	// First, we register a section.
 	add_settings_section(
 		'general_settings_section',
 		__( 'Settings', 'ctslider' ),
