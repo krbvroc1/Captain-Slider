@@ -65,8 +65,9 @@ add_action( 'wp_enqueue_scripts', 'ctslider_load_scripts' );
 function ctslider_load_admin_scripts( $hook ) {
 	global $post;
 
+	wp_register_style( 'admin-styles', CTSLIDER_PLUGIN_URL . 'includes/css/admin-styles.css', false, CTSLIDER_VERSION );
+
 	if( 'edit.php' === $hook && 'slides' === $post->post_type ) {
-		wp_register_style( 'admin-styles', CTSLIDER_PLUGIN_URL . 'includes/css/admin-styles.css', false, CTSLIDER_VERSION );
 		wp_enqueue_style( 'admin-styles' );
 	}
 }
