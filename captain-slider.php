@@ -28,7 +28,9 @@ if ( !defined( 'CTSLIDER_PLUGIN_URL' ) ) {
 }
 
 // Plugin Version
-define( 'CTSLIDER_VERSION', '1.0.0' );
+if ( !defined( 'CTSLIDER_VERSION' ) ) {
+	define( 'CTSLIDER_VERSION', '1.0.0' );
+}
 
 
 /*
