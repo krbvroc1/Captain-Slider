@@ -139,7 +139,7 @@ add_action( 'wp_head', 'ctslider_slider_load' );
  * @return      string $link
  */
 
-function ctslider_settings_link( $links, $file ) {
+function ctslider_settings_link( $link, $file ) {
 	static $this_plugin;
 	
 	if ( !$this_plugin )
