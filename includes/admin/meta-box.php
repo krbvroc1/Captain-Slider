@@ -1,16 +1,16 @@
 <?php
 
 // Set Up Meta Box & Fields for Slides
-$slidecaption_1_metabox = array( 
+$ctslider_slidecaption_1_metabox = array( 
 	'id' => 'slidecaption',
-	'title' => __('Slider Settings', 'ctslider'),
+	'title' => __( 'Slider Settings', 'ctslider' ),
 	'page' => array( 'slides' ),
 	'context' => 'normal',
 	'priority' => 'default',
 	'fields' => array(
 		array(
-			'name' 			=> __('Slide Link', 'ctslider'),
-			'desc' 			=> __("Where you'd like the slide to link to. If you leave this field blank the slide will not link anywhere.", 'ctslider'),
+			'name' 			=> __( 'Slide Link', 'ctslider' ),
+			'desc' 			=> __( "Where you'd like the slide to link to. If you leave this field blank the slide will not link anywhere.", 'ctslider' ),
 			'id' 			=> 'ctslider_slidelink',
 			'class' 		=> 'ctslider_slidelink',
 			'type' 			=> 'text',
@@ -19,8 +19,8 @@ $slidecaption_1_metabox = array(
 		),
 					
 		array(
-			'name' 			=> __('Caption Text', 'ctslider'),
-			'desc' 			=> __("If you'd like to have a caption displayed with the slide, enter it here. If you leave this field blank, there will be no caption.", 'ctslider' ),
+			'name' 			=> __( 'Caption Text', 'ctslider' ),
+			'desc' 			=> __( "If you'd like to have a caption displayed with the slide, enter it here. If you leave this field blank, there will be no caption.", 'ctslider' ),
 			'id' 			=> 'ctslider_captiontext',
 			'class' 		=> 'ctslider_captiontext',
 			'type' 			=> 'textarea',
@@ -42,10 +42,10 @@ $slidecaption_1_metabox = array(
 
 
 function ctslider_add_slidecaption_1_meta_box() {
-	global $slidecaption_1_metabox;		
+	global $ctslider_slidecaption_1_metabox;		
 
-	foreach ( $slidecaption_1_metabox['page'] as $page ) {
-		add_meta_box( $slidecaption_1_metabox['id'], $slidecaption_1_metabox['title'], 'ctslider_show_slidecaption_1_box', $page, 'normal', 'default', $slidecaption_1_metabox );
+	foreach ( $ctslider_slidecaption_1_metabox['page'] as $page ) {
+		add_meta_box( $ctslider_slidecaption_1_metabox['id'], $ctslider_slidecaption_1_metabox['title'], 'ctslider_show_slidecaption_1_box', $page, 'normal', 'default', $ctslider_slidecaption_1_metabox );
 	}
 }
 add_action('admin_menu', 'ctslider_add_slidecaption_1_meta_box');
@@ -53,16 +53,13 @@ add_action('admin_menu', 'ctslider_add_slidecaption_1_meta_box');
 	
 // Display Meta Boxes
 function ctslider_show_slidecaption_1_box()	{
-	global $post;
-	global $slidecaption_1_metabox;
-	global $ctslider_prefix;
-	global $wp_version;
+	global $post, $ctslider_slidecaption_1_metabox, $ctslider_prefix, $wp_version;
 	
 	// Use nonce for verification
 	echo '<input type="hidden" name="ctslider_slidecaption_1_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
 	echo '<table class="form-table">';
 
-	foreach ( $slidecaption_1_metabox['fields'] as $field ) {
+	foreach ( $ctslider_slidecaption_1_metabox['fields'] as $field ) {
 		$meta = get_post_meta($post->ID, $field['id'], true);
 		
 		echo '<tr>',
@@ -102,7 +99,7 @@ function ctslider_show_slidecaption_1_box()	{
 // Save data from meta box
 function ctslider_slidecaption_1_save( $post_id ) {
 	global $post;
-	global $slidecaption_1_metabox;
+	global $ctslider_slidecaption_1_metabox;
 	
 	// verify nonce
 	if ( !wp_verify_nonce( $_POST['ctslider_slidecaption_1_meta_box_nonce'], basename(__FILE__) ) ) {
@@ -123,7 +120,7 @@ function ctslider_slidecaption_1_save( $post_id ) {
 		return $post_id;
 	}
 	
-	foreach ( $slidecaption_1_metabox['fields'] as $field ) {
+	foreach ( $ctslider_slidecaption_1_metabox['fields'] as $field ) {
 		$old = get_post_meta( $post_id, $field['id'], true );
 		$new = $_POST[$field['id']];
 
