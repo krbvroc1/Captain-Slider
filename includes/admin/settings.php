@@ -74,7 +74,7 @@ function ctslider_render_settings_page( $active_tab = '' ) {
 
 		$donate = ctslider_options_each( 'donation' );
 
-		if ( $donate !== 1 ) {
+		if ( $donate != 1 ) {
 			echo '<p>';
 			_e( 'If you love Captain Slider, any donation would be appreciated! It helps to continue the development and support of the plugin.', 'ctslider' );
 			printf( __( '%sBut seriously, I just want to drink beer and coffee for free, so help a developer out.%sLove, Captain Theme (Bryce)%s', 'ctslider' ), '<br /><em>', '</em><br /><strong>', '</strong>' ); 
