@@ -104,9 +104,9 @@ function ctslider_slider_load() {
 				.flexslider({
 				animation: '<?php if ( $effect == 'fade' ) { echo 'fade'; } else { echo 'slide'; } ?>', // Specify sets like: 'fade' or 'slide'
 				direction: '<?php if ( $effect == 'slideh' ) { echo 'horizontal'; } else { echo 'vertical'; } ?>',
-				slideshow: <?php if ( 1 === $automatic ) { echo 'false'; } else { echo 'true'; } ?>,
-				controlNav: <?php if ( 1 === $controlnav ) { echo 'false'; } else { echo 'true'; } ?>,
-				directionNav: <?php if ( 1 === $arrownav  ) { echo 'false'; } else { echo 'true'; } ?>,
+				slideshow: <?php if ( 1 == $automatic ) { echo 'false'; } else { echo 'true'; } ?>,
+				controlNav: <?php if ( 1 == $controlnav ) { echo 'false'; } else { echo 'true'; } ?>,
+				directionNav: <?php if ( 1 == $arrownav  ) { echo 'false'; } else { echo 'true'; } ?>,
 				slideshowSpeed: <?php echo $slidespeed; ?>,
 				animationSpeed: <?php echo $anispeed; ?>,
 				useCSS: false,
