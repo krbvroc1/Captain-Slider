@@ -1,7 +1,7 @@
 Captain-Slider
 ==============
 
-*	**Contributors:** captaintheme, bryceadams123
+*	**Contributors:** captaintheme, bryceadams123, sunnyratilal
 *	**Donate link:** http://captaintheme.com/
 *	**Tags:** captain theme, captain slider, slider, jquery slider, responsive slider, slideshow, video slider, mobile slider, flexslider
 *	**Requires at least:** 3.3
@@ -100,6 +100,11 @@ How sweet of you. Anything from a small donation (made through the Captain Slide
 
 
 ##Changelog
+
+**Version 1.0.5 (13/11/2012):**
+
+* General Improvements
+* Better Code Formatting
 
 **Version 1.0.0 (07/11/2012):**
 
