@@ -101,6 +101,10 @@ How sweet of you. Anything from a small donation (made through the Captain Slide
 
 ##Changelog
 
+**Version 1.0.6 (13/11/2012):**
+
+* Minor CSS Fix for Default Wordpress Themes
+
 **Version 1.0.5 (13/11/2012):**
 
 * General Improvements
