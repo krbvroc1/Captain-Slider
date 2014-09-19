@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Captain Slider
+Plugin Name: Captain Slider (KRB Modified)
 Plugin URI: http://captaintheme.com/plugins/captain-slider/
 Description: Allows you to easily create multiple jQuery sliders.
 Author: Captain Theme
@@ -110,7 +110,7 @@ function ctslider_slider_load() {
 				slideshowSpeed: <?php echo $slidespeed; ?>,
 				animationSpeed: <?php echo $anispeed; ?>,
 				useCSS: false,
-				animationLoop: true,
+				animationLoop: false,
 				smoothHeight: true,
 				//controlNav: "thumbnails"
 			});
