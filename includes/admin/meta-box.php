@@ -140,7 +140,7 @@ function ctslider_show_slidecaption_1_box()	{
 function ctslider_slidecaption_1_save( $post_id ) {
 	global $post, $ctslider_slidecaption_1_metabox;
 	
-	if ( !wp_verify_nonce( $_POST['ctslider_slidecaption_1_meta_box_nonce'], basename(__FILE__) ) )
+	if ( ! isset( $_POST['ctslider_slidecaption_1_meta_box_nonce'] )  || ( !wp_verify_nonce( $_POST['ctslider_slidecaption_1_meta_box_nonce'], basename(__FILE__) ) ) )
 		return $post_id;
 
 	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
