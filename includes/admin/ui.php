@@ -8,25 +8,30 @@
 function ctslider_taxonomy_filter_restrict_manage_posts() {
 	global $typenow;
 
-	$post_types = get_post_types( array( '_builtin' => false ) );
+    // Only applicable to Captain Slider related pages - otherwise we are
+    // adding a dropdown menu to every custom post type
+    if ( $typenow == 'slides' ) {
 
-	if ( in_array( $typenow, $post_types ) ) {
-		$filters = get_object_taxonomies( $typenow );
+        $post_types = get_post_types(array('_builtin' => false));
 
-		foreach ( $filters as $tax_slug ) {
-			$tax_obj = get_taxonomy( $tax_slug );
-			wp_dropdown_categories( array(
-					'show_option_all' => __('Show All '.$tax_obj->label ),
-					'taxonomy' 	  => $tax_slug,
-					'name' 		  => $tax_obj->name,
-					'orderby' 	  => 'name',
-					'selected' 	  => $_GET[$tax_slug],
-					'hierarchical' 	  => $tax_obj->hierarchical,
-					'show_count' 	  => false,
-					'hide_empty' 	  => true
-			) );
-		}
-	}
+        if (in_array($typenow, $post_types)) {
+            $filters = get_object_taxonomies($typenow);
+
+            foreach ($filters as $tax_slug) {
+                $tax_obj = get_taxonomy($tax_slug);
+                wp_dropdown_categories(array(
+                    'show_option_all' => __('Show All ' . $tax_obj->label),
+                    'taxonomy' => $tax_slug,
+                    'name' => $tax_obj->name,
+                    'orderby' => 'name',
+                    'selected' => $_GET[$tax_slug],
+                    'hierarchical' => $tax_obj->hierarchical,
+                    'show_count' => false,
+                    'hide_empty' => true
+                ));
+            }
+        }
+    }
 }
 
 add_action( 'restrict_manage_posts', 'ctslider_taxonomy_filter_restrict_manage_posts' );
@@ -35,16 +40,20 @@ add_action( 'restrict_manage_posts', 'ctslider_taxonomy_filter_restrict_manage_p
 function ctslider_taxonomy_filter_post_type_request( $query ) {
 	global $pagenow, $typenow;
 
-	if ( 'edit.php' == $pagenow ) {
-		$filters = get_object_taxonomies( $typenow );
-		foreach ( $filters as $tax_slug ) {
-			$var = &$query->query_vars[$tax_slug];
-			if ( isset( $var ) ) {
-				$term = get_term_by( 'id', $var, $tax_slug );
-				$var = $term->slug;
-			}
-		}
-	}
+    // Only applicable to Captain Slider related pages - otherwise we are
+    // modifying the query for every custom post type
+    if ( $typenow == 'slides' ) {
+        if ('edit.php' == $pagenow) {
+            $filters = get_object_taxonomies($typenow);
+            foreach ($filters as $tax_slug) {
+                $var = &$query->query_vars[$tax_slug];
+                if (isset($var)) {
+                    $term = get_term_by('id', $var, $tax_slug);
+                    $var = $term->slug;
+                }
+            }
+        }
+    }
 }
 add_filter( 'parse_query', 'ctslider_taxonomy_filter_post_type_request' );
 
