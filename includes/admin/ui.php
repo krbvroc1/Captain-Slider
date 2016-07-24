@@ -24,7 +24,7 @@ function ctslider_taxonomy_filter_restrict_manage_posts() {
                     'taxonomy' => $tax_slug,
                     'name' => $tax_obj->name,
                     'orderby' => 'name',
-                    'selected' => $_GET[$tax_slug],
+                    'selected' => isset($_GET[$tax_slug]) ? $_GET[$tax_slug] : '',
                     'hierarchical' => $tax_obj->hierarchical,
                     'show_count' => false,
                     'hide_empty' => true
@@ -49,7 +49,9 @@ function ctslider_taxonomy_filter_post_type_request( $query ) {
                 $var = &$query->query_vars[$tax_slug];
                 if (isset($var)) {
                     $term = get_term_by('id', $var, $tax_slug);
-                    $var = $term->slug;
+					if ($term) {
+						$var = $term->slug;
+					}
                 }
             }
         }
