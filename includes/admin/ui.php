@@ -142,10 +142,8 @@ add_filter( 'manage_edit-slides_sortable_columns','ctslider_order_column_registe
 // Presets Slides Order to be menu_order
 function ctslider_set_custom_post_types_admin_order( $wp_query ) {
 	if ( is_admin() ) {
-		// Get the post type from the query
-		$post_type = $wp_query->query['post_type'];
 		// if it's one of our custom ones
-		if ( $post_type == 'slides' ) {
+		if (isset( $wp_query->query_vars['post_type'] ) && 'slides' == $wp_query->query_vars['post_type'] ) {
 			$wp_query->set( 'orderby', 'menu_order' );
 			$wp_query->set( 'order', 'ASC' );
 		}
