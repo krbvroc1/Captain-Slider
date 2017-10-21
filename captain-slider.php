@@ -50,8 +50,8 @@ load_plugin_textdomain( 'ctslider', false, dirname( plugin_basename( __FILE__ ) 
 function ctslider_load_scripts() {
 	wp_register_style( 'flexslider-style',  CTSLIDER_PLUGIN_URL . 'includes/css/flexslider.css', array(  ), CTSLIDER_VERSION );
 
-	wp_register_script( 'flexslider',  CTSLIDER_PLUGIN_URL .  'includes/js/jquery.flexslider-min.js', array( 'jquery' ), CTSLIDER_VERSION, false );
-	wp_register_script( 'fitvids',  CTSLIDER_PLUGIN_URL . 'includes/js/jquery.fitvids.js', array( 'jquery' ), CTSLIDER_VERSION, false );
+	wp_register_script( 'flexslider',  CTSLIDER_PLUGIN_URL .  'includes/js/jquery.flexslider-min.js', array( 'jquery' ), CTSLIDER_VERSION, true );
+	wp_register_script( 'fitvids',  CTSLIDER_PLUGIN_URL . 'includes/js/jquery.fitvids.js', array( 'jquery' ), CTSLIDER_VERSION, true );
 	
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'flexslider' );
@@ -67,7 +67,7 @@ function ctslider_load_admin_scripts( $hook ) {
 
 	wp_register_style( 'admin-styles', CTSLIDER_PLUGIN_URL . 'includes/css/admin-styles.css', false, CTSLIDER_VERSION );
 
-	if ( 'edit.php' === $hook && 'slides' === $post->post_type ) {
+	if ( 'edit.php' === $hook && null !== $post && 'slides' === $post->post_type ) {
 		wp_enqueue_style( 'admin-styles' );
 	}
 }
